@@ -1,0 +1,11 @@
+rentcar:
+ deployName: rentcar-deployment
+ appName: rentcar-app
+ image:
+   name: gastonjacob/rentcar
+   tag: v1.4.0
+ port: 80
+
+
+ingress:
+  hosts: testcluster.softylines.com

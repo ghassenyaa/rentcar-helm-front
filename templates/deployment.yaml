@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.rentcar.deployName }}
+  labels:
+    app: {{ .Values.rentcar.appName }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.rentcar.appName }}
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.rentcar.appName }}
+    spec:
+      containers:
+        - name: {{ .Values.rentcar.appName }}
+          image: "{{ .Values.rentcar.image.name }}:{{ .Values.rentcar.image.tag }}" 
+          ports:
+            - containerPort: {{ .Values.rentcar.port }}
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: '250m'
+            requests:
+              memory: 128Mi
+              cpu: '80m'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.rentcar.appName }}
+spec:
+  selector:
+    app: {{ .Values.rentcar.appName }}
+  ports:
+    - port: {{ .Values.rentcar.port }}
